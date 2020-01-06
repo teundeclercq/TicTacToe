@@ -50,4 +50,9 @@ public class GameListService implements GameListInterface {
     public ArrayList<Game> getGames() {
         return gameListRepository.getGames();
     }
+
+    @Override
+    public Button calculateWinner() {
+        return gameListRepository.calculateWinner();
+    }
 }

@@ -56,6 +56,15 @@ public class GameListController {
         if (gameListService.makeMove(move)) {
             move.getPlayer().setCanMove(true);
             temp.convertAndSend("/topic/receiveMove/" + userId, move);
+            Button button = gameListService.calculateWinner();
+            if (button != null) {
+                gameListService.getPlayers().forEach((item) -> {
+                    if (!item.getId().equals(userId)) {
+                        temp.convertAndSend("/topic/receiveWinner/" + userId, button);
+                        temp.convertAndSend("/topic/receiveWinner/" +item.getId(), button);
+                    }
+                });
+            }
         }
     }
     @MessageMapping("/addGame")

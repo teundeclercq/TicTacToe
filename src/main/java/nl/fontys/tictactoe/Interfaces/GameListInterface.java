@@ -15,4 +15,5 @@ public interface GameListInterface {
     public ArrayList<Player> getPlayers();
     public void deleteGameFromList(String ownerId);
     public ArrayList<Game> getGames();
+    public Button calculateWinner();
 }

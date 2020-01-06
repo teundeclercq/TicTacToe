@@ -1,6 +1,7 @@
 package nl.fontys.tictactoe.Repositories;
 
 import nl.fontys.tictactoe.Interfaces.GameListInterface;
+import nl.fontys.tictactoe.Models.Button;
 import nl.fontys.tictactoe.Models.Game;
 import nl.fontys.tictactoe.Models.Move;
 import nl.fontys.tictactoe.Models.Player;
@@ -45,5 +46,10 @@ public class GameListRepository implements GameListInterface {
     @Override
     public ArrayList<Game> getGames() {
         return games;
+    }
+
+    @Override
+    public Button calculateWinner() {
+        return game.calculateWinner();
     }
 }
