@@ -1,11 +1,19 @@
 package nl.fontys.tictactoe.Models;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "player")
 public class Player {
+    @Id
     private String id;
     private String email;
     private Boolean canMove;
     private Button playerFiguur;
     private Button playerTurn;
+    @ManyToOne
+    @JoinColumn(name = "gamesession_id")
+    private GameSession gamesession;
     public Player() {}
     public Player(String id, String email, Boolean canMove) {
         this.id = id;
