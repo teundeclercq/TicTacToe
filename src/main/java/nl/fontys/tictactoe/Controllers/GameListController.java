@@ -1,21 +1,20 @@
 package nl.fontys.tictactoe.Controllers;
 
-import nl.fontys.tictactoe.Models.Button;
-import nl.fontys.tictactoe.Models.Game;
-import nl.fontys.tictactoe.Models.Move;
-import nl.fontys.tictactoe.Models.Player;
+import nl.fontys.tictactoe.Models.*;
 import nl.fontys.tictactoe.Services.GameListService;
-import org.apache.coyote.Response;
+import nl.fontys.tictactoe.Services.GameSessionService;
+import nl.fontys.tictactoe.Services.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Logger;
 
 @Controller
@@ -25,6 +24,9 @@ public class GameListController {
     SimpMessagingTemplate temp;
     @Autowired
     private GameListService gameListService;
+    @Autowired
+    private GameSessionService gameSessionService;
+
 
     @MessageMapping("/getGames")
     @SendTo("/topic/games")
@@ -64,6 +66,15 @@ public class GameListController {
                         temp.convertAndSend("/topic/receiveWinner/" +item.getId(), button);
                     }
                 });
+                Set<Player> players = new HashSet<>(gameListService.getPlayers());
+                Player player;
+                for (Player item : gameListService.getPlayers()) {
+                    if (item.getPlayerFiguur().equals(button)) {
+                        player = item;
+                        gameSessionService.addGameSession(new GameSession(players, player.getEmail()));
+                    }
+                }
+
             }
         }
     }
