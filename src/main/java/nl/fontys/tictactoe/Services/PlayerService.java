@@ -19,14 +19,14 @@ public class PlayerService {
         return (List<Player>) playerRepository.findAll();
     }
 
-    public void addPlayer(Player player) {
-        playerRepository.save(player);
+    public Player addPlayer(Player player) {
+       return playerRepository.save(player);
     }
     public Player getPlayer(String id) {
         return playerRepository.findById(id).orElse(null);
     }
-    public void updatePlayer(Player player) {
-        playerRepository.save(player);
+    public Player updatePlayer(Player player) {
+        return playerRepository.save(player);
     }
     public void deletePlayer(String id) {
         playerRepository.deleteById(id);

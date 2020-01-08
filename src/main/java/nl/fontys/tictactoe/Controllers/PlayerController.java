@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@Controller
+@RestController
 @RequestMapping("/player")
 public class PlayerController {
     private static final Logger logger = Logger.getLogger(PlayerController.class.getName());
@@ -32,8 +32,10 @@ public class PlayerController {
                     playerToDo.getPlayerFiguur(),
                     playerToDo.getPlayerTurn()
             );
-            this.playerService.addPlayer(player);
-            map.put(status, "Ok");
+            Player player1 = this.playerService.addPlayer(player);
+            System.out.println(player1);
+            map.put(status, "ok");
+            System.out.println(map);
             return map;
         } catch (Exception e) {
             logger.log(Level.INFO, exceptionMsg, e);
