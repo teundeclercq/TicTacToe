@@ -11,6 +11,7 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -71,7 +72,7 @@ public class GameListController {
                 for (Player item : gameListService.getPlayers()) {
                     if (item.getPlayerFiguur().equals(button)) {
                         player = item;
-                        gameSessionService.addGameSession(new GameSession(players, player.getEmail()));
+                        gameSessionService.addGameSession(new GameSession(players, player.getEmail(), LocalDateTime.now()));
                     }
                 }
 

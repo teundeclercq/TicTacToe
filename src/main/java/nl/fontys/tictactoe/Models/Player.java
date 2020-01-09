@@ -23,8 +23,6 @@ public class Player implements Serializable {
     private Button playerFiguur;
     @Column(name = "playerTurn")
     private Button playerTurn;
-    @ManyToMany(mappedBy = "players")
-    private Set<GameSession> gameSessions;
     public Player() {}
     public Player(String id, String email) {
         this.id = id;

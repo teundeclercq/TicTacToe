@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
@@ -17,23 +18,38 @@ public class GameSession implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "gamesession_id")
     private int id;
-    @JsonIgnore
-    @ManyToMany
-    @JoinTable(name = "Player_GameSession",
-                joinColumns = @JoinColumn(name = "gamesession_id"),
-                inverseJoinColumns = @JoinColumn(name = "player_id"))
-    private Set<Player> players;
+    @Column(name = "playerO")
+    private String playerO;
+    @Column(name = "playerX")
+    private String playerX;
     @Column(name = "playerWhoWon")
     private String playerWhoWon;
-    public GameSession(Set<Player> players, String playerWhoWon) {
+    @Column(name = "TimePlayed")
+    private LocalDateTime timePlayed;
+    public GameSession(Set<Player> players, String playerWhoWon, LocalDateTime currentTime) {
         if (players.size() == 2) {
-            this.players = players;
+            players.forEach((item) -> {
+                if (item.getPlayerFiguur() == Button.X) {
+                    this.playerX = item.getEmail();
+                }
+                if (item.getPlayerFiguur() == Button.O) {
+                    this.playerO = item.getEmail();
+                }
+            });
+            this.timePlayed = currentTime;
             this.playerWhoWon = playerWhoWon;
         }
     }
     public GameSession(Set<Player> players) {
         if (players.size() == 2) {
-            this.players = players;
+            players.forEach((item) -> {
+                if (item.getPlayerFiguur() == Button.X) {
+                    this.playerX = item.getEmail();
+                }
+                if (item.getPlayerFiguur() == Button.O) {
+                    this.playerO = item.getEmail();
+                }
+            });
         }
     }
     public GameSession() {
