@@ -47,10 +47,25 @@ public class GameListController {
                         player.setPlayerTurn(Button.X);
                         item.setPlayerTurn(Button.X);
                         player.setCanMove(true);
-                        temp.convertAndSend("/topic/register/" + player.getId(), item);
-                        temp.convertAndSend("/topic/register/" + item.getId(), player);
+                        //Send the player icon back to the respective player.
+                        temp.convertAndSend("/topic/register/" + player.getId(), player);
+                        temp.convertAndSend("/topic/register/" + item.getId(), item);
+
+                        //Send the enemy player to the other players.
+                        temp.convertAndSend("/topic/enemyPlayer/" + player.getId(), item);
+                        temp.convertAndSend("/topic/enemyPlayer/" + item.getId(), player);
+
                     }
                 });
+            }
+        }
+    }
+    @MessageMapping("/remove")
+    public void removePlayerFromGame(Player player) {
+        System.out.println(gameListService.getPlayers().size());
+        if (player!=null) {
+            if (gameListService.getPlayers().size() != 0) {
+                gameListService.removePlayerFromGame(player.getId());
             }
         }
     }

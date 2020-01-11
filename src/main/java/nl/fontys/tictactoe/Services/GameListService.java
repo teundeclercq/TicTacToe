@@ -27,6 +27,9 @@ public class GameListService implements GameListInterface {
     }
 
     @Override
+    public void removePlayerFromGame(String uid) { gameListRepository.removePlayerFromGame(uid); }
+
+    @Override
     public Boolean containsTwoPlayers() {
         return gameListRepository.containsTwoPlayers();
     }

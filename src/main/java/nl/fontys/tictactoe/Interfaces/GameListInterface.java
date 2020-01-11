@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public interface GameListInterface {
     public void addGamesToList(Game game);
     public void addPlayerToGame(Player player);
+    public void removePlayerFromGame(String uid);
     public Boolean containsTwoPlayers();
     public Boolean makeMove(Move move);
     public ArrayList<Player> getPlayers();

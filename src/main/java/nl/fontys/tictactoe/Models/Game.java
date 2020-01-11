@@ -66,11 +66,7 @@ public class Game {
         return null;
     }
     public void removePlayer(String uid) {
-        players.forEach((item) -> {
-            if (!item.getId().equals(uid)) {
-                players.remove(item);
-            }
-        });
+        players.removeIf(player -> player.getId().equals(uid));
     }
     public ArrayList<Player> getPlayers() { return players; }
     public Boolean containsTwoPlayer() {
